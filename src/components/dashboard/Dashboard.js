@@ -1,7 +1,7 @@
 import React from "react";
-import { useState, useEffect, useForm } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
-import { data } from "autoprefixer";
+
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
@@ -57,7 +57,7 @@ function Dashboard() {
       });
   };
   useEffect(() => {
-    Axios.get("https://skyewalletapi.herokuapp.com/profile", {
+    Axios.get("https://skyewalletapi.herokuapp.com/getauthenticateduserdata", {
       headers: {
         Authorization: "Bearer" + " " + localStorage.getItem("token"),
       },
@@ -66,7 +66,7 @@ function Dashboard() {
       setUserData(response.data);
       console.log(userData);
     });
-  }, []);
+  }, [userData]);
 
   return (
     <div className="h-screen">

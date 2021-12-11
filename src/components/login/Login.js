@@ -50,7 +50,7 @@ function Login() {
   };
 
   const checkIfUserAuthenticated = (e) => {
-    Axios.get("https://skyewalletapi.herokuapp.com/profile", {
+    Axios.get("https://skyewalletapi.herokuapp.com/getauthenticateduserdata", {
       headers: {
         Authorization: "Bearer" + " " + localStorage.getItem("token"),
       },
@@ -58,11 +58,11 @@ function Login() {
       console.log(response);
     });
   };
-  let subtitle;
+  // let subtitle;
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  // function openModal() {
+  //   setIsOpen(true);
+  // }
 
   function closeModal() {
     setIsOpen(false);
