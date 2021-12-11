@@ -9,12 +9,14 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const navigate = useNavigate();
 
   Axios.defaults.withCredentials = true;
 
   const login = (e) => {
     e.preventDefault();
+    setisLoading(true);
     console.log(
       JSON.stringify({
         email: email,
@@ -36,6 +38,7 @@ function Login() {
           console.log(response.data);
           localStorage.setItem("token", response.data.access_token);
           setLoginStatus(true);
+          setisLoading(false);
           setIsOpen(true);
         }
         console.log(response);
@@ -71,6 +74,9 @@ function Login() {
   return (
     <div>
       <h1>Login</h1>
+      {isLoading && (
+        <h1 className="text-green-400 text-lg text-center">Loading....</h1>
+      )}
       <div className="flex justify-center">
         <form
           onSubmit={login}

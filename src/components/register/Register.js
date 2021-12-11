@@ -10,11 +10,13 @@ function Register() {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const navigate = useNavigate();
   Axios.defaults.withCredentials = true;
 
   const register = (e) => {
     e.preventDefault();
+    setisLoading(true);
     console.log(
       JSON.stringify({
         email: email,
@@ -33,6 +35,7 @@ function Register() {
     })
       .then(function (response) {
         console.log(response.data);
+        setisLoading(false);
         setIsOpen(true);
 
         console.log(response);
@@ -53,6 +56,9 @@ function Register() {
   return (
     <div>
       <h1 className="text-center">Register</h1>
+      {isLoading && (
+        <h1 className="text-green-400 text-lg text-center">Loading....</h1>
+      )}
       <div onSubmit={register} className="flex justify-center">
         <form className=" w-4/12 flex flex-col px-6 space-y-6 sm:px-10 sm:space-y-8">
           <div className="flex flex-wrap">
