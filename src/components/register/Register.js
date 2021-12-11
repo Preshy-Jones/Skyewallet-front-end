@@ -23,7 +23,7 @@ function Register() {
     );
     Axios({
       method: "POST",
-      url: "http://127.0.0.1:3002/users/register",
+      url: "https://skyewalletapi.herokuapp.com/users/register",
       data: {
         name: name,
         email: email,

@@ -12,7 +12,7 @@ function Dashboard() {
 
   const generatePaymentId = (userId) => {
     Axios.put(
-      `http://127.0.0.1:3002/users/${userId}/generate`
+      `https://skyewalletapi.herokuapp.com/users/${userId}/generate`
       // {
       //   headers: {
       //     Authorization: "Bearer" + " " + localStorage.getItem("token"),
@@ -35,7 +35,7 @@ function Dashboard() {
   };
   const deletePaymentId = (paymentId, userId) => {
     Axios.put(
-      `http://127.0.0.1:3002/users/${userId}/${paymentId}/delete`
+      `https://skyewalletapi.herokuapp.com/users/${userId}/${paymentId}/delete`
       // {
       //   headers: {
       //     Authorization: "Bearer" + " " + localStorage.getItem("token"),
@@ -57,7 +57,7 @@ function Dashboard() {
       });
   };
   useEffect(() => {
-    Axios.get("http://127.0.0.1:3002/profile", {
+    Axios.get("https://skyewalletapi.herokuapp.com/profile", {
       headers: {
         Authorization: "Bearer" + " " + localStorage.getItem("token"),
       },

@@ -23,7 +23,7 @@ function Login() {
     );
     Axios({
       method: "POST",
-      url: "http://127.0.0.1:3002/auth/login",
+      url: "https://skyewalletapi.herokuapp.com/auth/login",
       data: {
         email: email,
         password: password,
@@ -50,7 +50,7 @@ function Login() {
   };
 
   const checkIfUserAuthenticated = (e) => {
-    Axios.get("http://127.0.0.1:3002/profile", {
+    Axios.get("https://skyewalletapi.herokuapp.com/profile", {
       headers: {
         Authorization: "Bearer" + " " + localStorage.getItem("token"),
       },
