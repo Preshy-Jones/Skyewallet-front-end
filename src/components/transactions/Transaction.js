@@ -89,7 +89,7 @@ function Transaction() {
   };
 
   useEffect(() => {
-    Axios.get("http://127.0.0.1:3002/getauthenticateduserdata", {
+    Axios.get("https://skyewalletapi.herokuapp.com/getauthenticateduserdata", {
       headers: {
         Authorization: "Bearer" + " " + localStorage.getItem("token"),
       },
