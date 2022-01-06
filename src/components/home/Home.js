@@ -39,7 +39,7 @@ function Home() {
     setIsOpen(false);
   }
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen flex justify-center items-center bg-background">
       <form onSubmit={handleSubmit}>
         <input
           className="w-thirteenth h-12 px-3 rounded-sm"

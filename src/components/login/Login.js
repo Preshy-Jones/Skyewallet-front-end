@@ -72,7 +72,7 @@ function Login() {
     navigate("/dashboard");
   }
   return (
-    <div>
+    <div className="bg-background">
       <h1>Login</h1>
       {isLoading && (
         <h1 className="text-green-400 text-lg text-center">Loading....</h1>

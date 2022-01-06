@@ -1,14 +1,31 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Axios from "axios";
-
+import TransactionHistory from "../TransactionHistory";
 import { useNavigate } from "react-router-dom";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 function Dashboard() {
   const [userData, setUserData] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const printRef = useRef();
 
   const navigate = useNavigate();
+
+  const handleDownloadPdf = async () => {
+    const element = printRef.current;
+    const canvas = await html2canvas(element);
+    const data = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF();
+    const imgProperties = pdf.getImageProperties(data);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+
+    pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("print.pdf");
+  };
 
   const generatePaymentId = (userId) => {
     Axios.put(
@@ -66,12 +83,12 @@ function Dashboard() {
       setUserData(response.data);
       console.log(userData);
     });
-  }, [userData]);
+  }, []);
 
   return (
-    <div className="h-screen">
+    <div className="h-screen ">
       {userData && (
-        <div className="flex flex-col text-white items-center justify-center ">
+        <div className="flex flex-col text-white items-center justify-center bg-background mb-6">
           <h1 className="text-center text-white mb-20">Dashboard</h1>
           <div className="grid grid-cols-2">
             <div className="grid grid-cols-1 gap-3">
@@ -113,8 +130,16 @@ function Dashboard() {
             </div>
             {errorMessage && <h1 className=" text-red-500">{errorMessage}</h1>}
           </div>
+          <button
+            className="text-center bg-green-700 mb-2 text-white rounded-lg px-6 py-2 mt-6 cursor-pointer"
+            type="button"
+            onClick={handleDownloadPdf}
+          >
+            Retrieve transaction history
+          </button>
         </div>
       )}
+      {userData && <TransactionHistory ref={printRef} userData={userData} />}
     </div>
   );
 }

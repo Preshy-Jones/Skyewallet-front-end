@@ -2,7 +2,7 @@ import React from "react";
 
 function NavBar() {
   return (
-    <div className="flex pt-6 pb-4 md:px-28">
+    <div className="flex pt-6 pb-4 md:px-28 bg-background">
       <a className="mr-auto" href="/">
         <img src="https://skyewallet.com/img/skye-logo-white.svg" alt="" />
       </a>
@@ -14,10 +14,13 @@ function NavBar() {
           <a href="/register">SignUp</a>
         </li>
         {localStorage.getItem("token") && (
-          <li className="">
+          <li className="mr-8">
             <a href="/dashboard">Dashboard</a>
           </li>
         )}
+        <li>
+          <a href="/transaction">Make Transaction</a>
+        </li>
       </ul>
     </div>
   );

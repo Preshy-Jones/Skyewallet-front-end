@@ -54,7 +54,7 @@ function Register() {
   }
 
   return (
-    <div>
+    <div className="bg-background">
       <h1 className="text-center">Register</h1>
       {isLoading && (
         <h1 className="text-green-400 text-lg text-center">Loading....</h1>

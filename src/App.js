@@ -7,11 +7,13 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Dashboard from "./components/dashboard/Dashboard";
 import Profile from "./components/profile/Profile";
+import Transaction from "./components/transactions/Transaction";
+import TransactionHistory from "./components/TransactionHistory";
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="App bg-background">
+      <div className="App">
         <NavBar />
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -19,6 +21,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/transaction" element={<Transaction />} />
         </Routes>
       </div>
     </BrowserRouter>
