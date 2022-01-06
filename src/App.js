@@ -8,7 +8,6 @@ import Register from "./components/register/Register";
 import Dashboard from "./components/dashboard/Dashboard";
 import Profile from "./components/profile/Profile";
 import Transaction from "./components/transactions/Transaction";
-import TransactionHistory from "./components/TransactionHistory";
 
 function App() {
   return (

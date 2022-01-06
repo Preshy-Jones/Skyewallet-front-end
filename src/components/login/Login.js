@@ -61,11 +61,6 @@ function Login() {
       console.log(response);
     });
   };
-  // let subtitle;
-
-  // function openModal() {
-  //   setIsOpen(true);
-  // }
 
   function closeModal() {
     setIsOpen(false);
