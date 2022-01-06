@@ -32,22 +32,22 @@ function NavBar() {
         <img src="https://skyewallet.com/img/skye-logo-white.svg" alt="" />
       </a>
       <ul className="flex text-white">
-        {!userAuthenticated && (
+        {!userAuthenticated && userData && (
           <li className="mr-8">
             <a href="/login"> Login</a>
           </li>
         )}
-        {!userAuthenticated && (
+        {!userAuthenticated && userData && (
           <li className="mr-8">
             <a href="/register">SignUp</a>
           </li>
         )}
-        {userAuthenticated && (
+        {userAuthenticated && userData && (
           <li className="mr-8">
             <a href="/dashboard">Dashboard</a>
           </li>
         )}
-        {userAuthenticated && (
+        {userAuthenticated && userData && (
           <li>
             <a href="/transaction">Make Transaction</a>
           </li>
