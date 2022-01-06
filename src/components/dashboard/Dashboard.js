@@ -130,6 +130,9 @@ function Dashboard() {
             </div>
             {errorMessage && <h1 className=" text-red-500">{errorMessage}</h1>}
           </div>
+          <a href="/transaction" className="text-green-500 text-lg">
+            Make transaction
+          </a>
           <button
             className="text-center bg-green-700 mb-2 text-white rounded-lg px-6 py-2 mt-6 cursor-pointer"
             type="button"

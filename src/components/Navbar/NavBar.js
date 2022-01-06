@@ -18,9 +18,11 @@ function NavBar() {
             <a href="/dashboard">Dashboard</a>
           </li>
         )}
-        <li>
-          <a href="/transaction">Make Transaction</a>
-        </li>
+        {localStorage.getItem("token") && (
+          <li>
+            <a href="/transaction">Make Transaction</a>
+          </li>
+        )}
       </ul>
     </div>
   );
