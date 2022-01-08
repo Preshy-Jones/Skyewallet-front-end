@@ -5,6 +5,7 @@ import Axios from "axios";
 function NavBar() {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [authenticationStatus, setAuthenticationStatus] = useState(false);
 
   useEffect(() => {
     Axios.get("https://skyewalletapi.herokuapp.com/getauthenticateduserdata", {
@@ -16,6 +17,7 @@ function NavBar() {
         console.log(response);
         setUserAuthenticated(true);
         setUserData(response.data);
+        setAuthenticationStatus(true);
         console.log(userData);
       })
       .catch(function (error) {
@@ -23,6 +25,7 @@ function NavBar() {
         //        console.log("hello");
         console.log(error);
         setUserAuthenticated(false);
+        setAuthenticationStatus(true);
         //        setErrorMessage(error.response.data.message);
       });
   }, []);
@@ -32,22 +35,22 @@ function NavBar() {
         <img src="https://skyewallet.com/img/skye-logo-white.svg" alt="" />
       </a>
       <ul className="flex text-white">
-        {!userAuthenticated && userData && (
+        {!userAuthenticated && authenticationStatus && (
           <li className="mr-8">
             <a href="/login"> Login</a>
           </li>
         )}
-        {!userAuthenticated && userData && (
+        {!userAuthenticated && authenticationStatus && (
           <li className="mr-8">
             <a href="/register">SignUp</a>
           </li>
         )}
-        {userAuthenticated && userData && (
+        {userAuthenticated && authenticationStatus && (
           <li className="mr-8">
             <a href="/dashboard">Dashboard</a>
           </li>
         )}
-        {userAuthenticated && userData && (
+        {userAuthenticated && authenticationStatus && (
           <li>
             <a href="/transaction">Make Transaction</a>
           </li>
