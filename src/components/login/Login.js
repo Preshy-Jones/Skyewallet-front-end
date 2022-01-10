@@ -3,6 +3,13 @@ import { useState } from "react";
 import Axios from "axios";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
+import {
+  BaseModal,
+  CenterModal,
+  ModalTitle,
+  ModalCloseTarget,
+} from "react-spring-modal";
+import Spinner from "../Spinner";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -10,6 +17,7 @@ function Login() {
   const [loginStatus, setLoginStatus] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isLoading, setisLoading] = useState(false);
+  const [isOpen, setOpen] = useState(false);
   const navigate = useNavigate();
 
   Axios.defaults.withCredentials = true;
@@ -39,7 +47,7 @@ function Login() {
           localStorage.setItem("token", response.data.access_token);
           setLoginStatus(true);
           setisLoading(false);
-          setIsOpen(true);
+          setOpen(true);
         }
         console.log(response);
       })
@@ -64,68 +72,102 @@ function Login() {
 
   function closeModal() {
     setIsOpen(false);
+
     navigate("/dashboard");
+    window.location.reload();
+  }
+
+  function redirectToDashboard() {
+    navigate("/dashboard");
+    window.location.reload();
   }
   return (
     <div className="bg-background">
       <h1>Login</h1>
-      {isLoading && (
+      {/* {isLoading && (
         <h1 className="text-green-400 text-lg text-center">Loading....</h1>
-      )}
-      <div className="flex justify-center">
-        <form
-          onSubmit={login}
-          className=" w-4/12 flex flex-col px-6 space-y-6 sm:px-10 sm:space-y-8"
-        >
-          <div className="flex flex-wrap">
-            <label className="block text-white text-sm  mb-2 sm:mb-4">
-              E-Mail Address
-            </label>
-            <input
-              id="email"
-              type="email"
-              className="form-input w-full rounded-md border border-fourth h-12  "
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="flex flex-wrap">
-            <label className="block text-white text-sm  mb-2 sm:mb-4">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-input w-full rounded-md border border-fourth  h-12 "
-              name="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-wrap justify-center">
-            <button
-              type="submit"
-              className="select-none font-bold whitespace-no-wrap py-2 px-20 rounded-lg text-base leading-normal no-underline text-white bg-primary hover:bg-blue-700 sm:py-2"
-            >
-              Login
-            </button>
-
-            <p className="w-full text-xs text-center text-primary my-6 sm:text-sm sm:my-8">
-              Haven't signed up yet?
-              <a
-                className="text-primary hover:text-blue-700 no-underline hover:underline"
-                href="{{ route('admin.login') }}"
+      )} */}
+      <div className="relative">
+        <div className="flex justify-center">
+          <form
+            onSubmit={login}
+            className=" w-4/12 flex flex-col px-6 space-y-6 sm:px-10 sm:space-y-8"
+          >
+            <div className="flex flex-wrap">
+              <label className="block text-white text-sm  mb-2 sm:mb-4">
+                E-Mail Address
+              </label>
+              <input
+                id="email"
+                type="email"
+                className="form-input w-full rounded-md border border-fourth h-12  "
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="flex flex-wrap">
+              <label className="block text-white text-sm  mb-2 sm:mb-4">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-input w-full rounded-md border border-fourth  h-12 "
+                name="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-wrap justify-center">
+              <button
+                type="submit"
+                className="select-none font-bold whitespace-no-wrap py-2 px-20 rounded-lg text-base leading-normal no-underline text-white bg-primary hover:bg-blue-700 sm:py-2"
               >
-                Register
-              </a>
-            </p>
+                Login
+              </button>
+              <p className="w-full text-xs text-center text-primary my-6 sm:text-sm sm:my-8">
+                Haven't signed up yet?
+                <a
+                  className="text-primary hover:text-blue-700 no-underline hover:underline"
+                  href="{{ route('admin.login') }}"
+                >
+                  Register
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
+        {isLoading && (
+          <div className="absolute top-0 left-spinner">
+            <Spinner />
           </div>
-        </form>
+        )}
       </div>
       {/* <button onClick={openModal}>Open Modal</button> */}
       <div className="flex justify-center">
+        <CenterModal
+          isOpen={isOpen}
+          onDismiss={() => setOpen(false)}
+          contentTransition={{
+            from: { background: "lightcoral", transform: "translateY(-100%)" },
+            enter: { background: "lightcyan", transform: "translateY(0)" },
+            leave: { background: "lightcoral", transform: "translateY(-100%)" },
+          }}
+        >
+          <div className="flex flex-col justify-center items-center">
+            <h1 className="text-center mb-16">Logged in Successfully</h1>
+            <ModalCloseTarget>
+              <button
+                onClick={redirectToDashboard}
+                className="select-none font-bold whitespace-no-wrap py-2 px-20 rounded-lg text-base leading-normal no-underline text-white bg-secondary hover:bg-green-700 sm:py-2"
+              >
+                Go to dashboard
+              </button>
+            </ModalCloseTarget>
+          </div>
+        </CenterModal>
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}

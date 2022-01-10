@@ -1,15 +1,22 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Axios from "axios";
 import Modal from "react-modal";
+import Spinner from "../Spinner";
+// /import { UserContext } from "../UserContext";
+//import { login } from "../../utils/login";
 
 function Home() {
   const [paymentId, setPaymentId] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
+
+  // const { user, setUser } = useContext(UserContext);
   Axios.defaults.withCredentials = true;
 
   let handleSubmit = (e) => {
+    setisLoading(true);
     e.preventDefault();
     //console.log(paymentId);
     Axios({
@@ -24,10 +31,12 @@ function Home() {
         // handle success
         setUserData(response.data);
         console.log(response);
+        setisLoading(false);
         setIsOpen(true);
       })
       .catch(function (error) {
         // handle error
+        setisLoading(false);
         console.log(error);
       })
       .then(function () {
@@ -39,52 +48,80 @@ function Home() {
     setIsOpen(false);
   }
   return (
-    <div className="h-screen flex justify-center items-center bg-background">
-      <form onSubmit={handleSubmit}>
-        <input
-          className="w-thirteenth h-12 px-3 rounded-sm"
-          type="text"
-          required
-          value={paymentId}
-          placeholder="Search Account holder by Payment ID"
-          onChange={(e) => setPaymentId(e.target.value)}
-        />
+    <div>
+      {/* <pre>{JSON.stringify(user, null, 2)}</pre>
+      {user ? (
         <button
-          className=" rounded-md font-semibold text-white text-sm h-12 bg-searchbtn px-12"
-          type="submit"
+          onClick={() => {
+            setUser(null);
+          }}
         >
-          Search
+          logout
         </button>
-      </form>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={{ color: "blue" }}
-      >
-        <div className="flex flex-col justify-center items-center">
-          <div className="grid grid-cols-2 mb-4">
-            <div className="grid grid-cols-1 gap-3">
-              <h1>Name</h1>
-              <h1>Email</h1>
-              <h1>Phone</h1>
-            </div>
-            {userData && (
-              <div className="grid grid-cols-1 gap-3">
-                <h1>{userData.name}</h1>
-                <h1>{userData.email}</h1>
-                <h1>{userData.phone}</h1>
-              </div>
-            )}
-          </div>
-
-          <button
-            onClick={closeModal}
-            className="select-none font-bold whitespace-no-wrap py-2 px-20 rounded-lg text-base leading-normal no-underline text-white bg-primary hover:bg-blue-700 sm:py-2"
+      ) : (
+        <button
+          onClick={async () => {
+            const user = await login();
+            setUser(user);
+          }}
+        >
+          login
+        </button>
+      )} */}
+      <div className="relative">
+        <div className="h-screen flex justify-center items-center bg-background">
+          <form onSubmit={handleSubmit}>
+            {/* <h1>{msg}</h1> */}
+            <input
+              className="w-thirteenth h-12 px-3 rounded-sm"
+              type="text"
+              required
+              value={paymentId}
+              placeholder="Search Account holder by Payment ID"
+              onChange={(e) => setPaymentId(e.target.value)}
+            />
+            <button
+              className=" rounded-md font-semibold text-white text-sm h-12 bg-searchbtn px-12"
+              type="submit"
+            >
+              Search
+            </button>
+          </form>
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={{ color: "blue" }}
           >
-            Close
-          </button>
+            <div className="flex flex-col justify-center items-center">
+              <div className="grid grid-cols-2 mb-4">
+                <div className="grid grid-cols-1 gap-3">
+                  <h1>Name</h1>
+                  <h1>Email</h1>
+                  <h1>Phone</h1>
+                </div>
+                {userData && (
+                  <div className="grid grid-cols-1 gap-3">
+                    <h1>{userData.name}</h1>
+                    <h1>{userData.email}</h1>
+                    <h1>{userData.phone}</h1>
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={closeModal}
+                className="select-none font-bold whitespace-no-wrap py-2 px-20 rounded-lg text-base leading-normal no-underline text-white bg-primary hover:bg-blue-700 sm:py-2"
+              >
+                Close
+              </button>
+            </div>
+          </Modal>
         </div>
-      </Modal>
+        {isLoading && (
+          <div className="absolute top-0 left-spinner">
+            <Spinner />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
