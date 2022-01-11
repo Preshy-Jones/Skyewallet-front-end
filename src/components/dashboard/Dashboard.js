@@ -95,11 +95,13 @@ function Dashboard() {
               <h1>Name</h1>
               <h1>Email</h1>
               <h1>Phone</h1>
+              <h1>Balance</h1>
             </div>
             <div className="grid grid-cols-1 gap-3">
               <h1>{userData.name}</h1>
               <h1>{userData.email}</h1>
               <h1>{userData.phone}</h1>
+              <h1>{userData.balance}</h1>
             </div>
           </div>
           <div>
