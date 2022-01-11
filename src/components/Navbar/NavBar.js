@@ -1,11 +1,21 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Axios from "axios";
+import { UserContext } from "../UserContext";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
   const [authenticationStatus, setAuthenticationStatus] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+    window.location.reload();
+  };
 
   useEffect(() => {
     Axios.get("https://skyewalletapi.herokuapp.com/getauthenticateduserdata", {
@@ -51,10 +61,22 @@ function NavBar() {
           </li>
         )}
         {userAuthenticated && authenticationStatus && (
-          <li>
+          <li className="mr-8">
             <a href="/transaction">Make Transaction</a>
           </li>
         )}
+        {userAuthenticated && authenticationStatus && (
+          <li className="cursor-pointer" onClick={logout}>
+            Log out
+          </li>
+        )}
+
+        {/* <li className="mr-8">
+          <a href="#">
+            {" "}
+            <pre>{JSON.stringify(user, null, 2)}</pre>
+          </a>
+        </li> */}
       </ul>
     </div>
   );

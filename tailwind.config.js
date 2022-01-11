@@ -74,6 +74,7 @@ module.exports = {
         90: "22rem",
         100: "27rem",
         120: "31.25rem",
+        spinner: "42.333333%",
       },
       zIndex: {
         1: "1",
