@@ -33,14 +33,14 @@ function Login() {
     );
     Axios({
       method: "POST",
-      url: "https://skyewalletapi.herokuapp.com/auth/login",
+      url: "https://mern-stack-blog-production.up.railway.app/v1/auth/login",
       data: {
         email: email,
         password: password,
       },
     })
       .then(function (response) {
-        if (!response.data.auth) {
+        if (!response.data.accessToken) {
           setLoginStatus(false);
         } else {
           console.log(response.data);
